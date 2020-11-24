@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Menu } from "antd";
 import {
-  AppstoreOutlined,
   SettingOutlined,
   UserOutlined,
   UserAddOutlined,
+  HomeOutlined,
 } from "@ant-design/icons";
 
 const { SubMenu, Item } = Menu;
@@ -19,7 +19,7 @@ const Header = () => {
 
   return (
     <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-      <Item key="home" icon={<AppstoreOutlined />}>
+      <Item key="home" icon={<HomeOutlined />}>
         Home
       </Item>
 
@@ -40,3 +40,4 @@ const Header = () => {
 };
 
 export default Header;
+ 
