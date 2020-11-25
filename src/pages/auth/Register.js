@@ -1,7 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 const Register = () => {
-    const registerForm = () => <p>Sign Up</p>
+    const [email, setEmail] = useState('')
+    const handleSubmit = () => {
+        //
+    }
+    const registerForm = () => <form onSubmit={handleSubmit}>
+        <input type="email" className="form-control" value={email} onChange={e => setEmail(e.target.value)} autoFocus/>
+    <button type="submit" className="btn btn-raised">Send registration email to: {email} </button>
+    </form>
     return (
         <div className="container p-5">
             <div className="row"> 
