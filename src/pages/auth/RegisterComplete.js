@@ -8,13 +8,50 @@ const RegisterComplete = ({history}) => {
   const [password, setPassword] = useState ('');
 ///props.history
 
-  useState(() => {
-      setEmail(window.localStorage.getItem('emailForRegistration'))
+  useEffect(() => {
+      setEmail(window.localStorage.getItem("emailForRegistration"));
+      console.log(window.location.href);
+      console.log(window.localStorage.getItem("emailForRegistration"))
   }, [])
  
   const handleSubmit = async (e) => {
     e.preventDefault();
- 
+
+    //validation for email and password
+    if(!email || !password) {
+      toast.error('Email and password is required');
+      return;
+    }
+
+    if(password.length < 6) {
+      toast.error('Password must be at least 6 characters long');
+      return;
+    }
+
+    try {
+      const result = await auth.signInWithEmailLink(
+        email, 
+        window.location.href
+        );
+      //console.log("RESULT", result);
+      if(result.user.emailVerified) {
+        //remove user email from local storage
+        window.localStorage.removeItem("emailForRegistration");
+        //get user id token
+        let user=auth.currentUser
+        await user.updatePassword(password); 
+        //get token
+        const idTokenResult= await user.getIdTokenResult();
+        //populate user in redux store
+        console.log("user", user, "idTokenResult");
+        //redirect
+        // history.push("/");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+      //
+    }
   };
 
   const completeRegistrationForm = () => (
@@ -31,7 +68,7 @@ const RegisterComplete = ({history}) => {
         value={password}
         onChange={e => setPassword(e.target.value)}
         placeholder="Choose a password"
-        autofocus
+        autoFocus
       />
 
     <br />
