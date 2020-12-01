@@ -45,7 +45,7 @@ const RegisterComplete = ({history}) => {
         //populate user in redux store
         console.log("user", user, "idTokenResult");
         //redirect
-        // history.push("/");
+        history.push("/");
       }
     } catch (error) {
       console.log(error);
